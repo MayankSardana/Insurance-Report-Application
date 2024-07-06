@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Spring Boot Application</title>
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+
+    <style>
+       body{
+			background-color:azure;
+		}
+
+        label{
+            font-weight:bold;
+        }
+
+      
+		
+        form{
+            margin-top:5px;
+        }
+
+     .g{
+		margin-left:230px;
+	 }
+		
+		.fg{
+			color:black;
+		}
+		
+		
+
+    </style>
+</head>
+<body>
+     <div class = "container-fluid">
+		
+		<nav class="navbar bg-body-tertiary">
+		  <div class="container-fluid">
+		    <a class="navbar-brand">Insurance Report Application</a>
+			<a th:href="@{'attach'}">Attach as mail</a>
+			<a th:href="@{'excel'}">Save as Excel</a>
+			  
+		  </div>
+		</nav>
+		
+        <form  method="post" th:action="@{/search}" th:object="${plans}">
+
+            <div class="d-flex justify-content-center mb-2">
+                <div class="p-2">
+                    <label>Plan Name :</label>
+                    <div>
+                    <select th:field="*{planName}">
+                        <option value="">--Select--</option>
+                        <option th:each="p : ${planList}" th:value="${p}" th:text="${p}"></option>
+                    </select>
+                </div>
+                </div>
+                   
+                <div class="p-2">
+                    
+                    <label>Plan Status :</label>
+                    <div>
+                    <select th:field="*{planStatus}">
+                        <option value="">--Select--</option>
+                        <option th:each="p : ${statusList}" th:value="${p}" th:text="${p}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="p-2">
+                    <label>Plan Start Date :</label>
+                    <div>
+                    <input type="date" th:field="*{planStartDate}" />
+                    </div>
+                </div>
+
+                <div class="p-2">
+
+                    <label>Plan End Date :</label>
+                    <div>
+                    <input type="date" th:field="*{planEndDate}" />
+                    </div>
+
+                </div>
+
+                <div class="p-2">
+                    <label>Gender :</label>
+                    <div>
+                    <input type="radio" th:field="*{gender}" value="Male" /> Male
+                    <input type="radio" th:field="*{gender}" value="Female" /> Female
+                     </div>
+                </div>
+
+              </div> 
+
+              <div class="g d-grid gap-6 col-8 mx-auto">
+                <button class="g btn btn-success justify-content-center" type="submit">Search</button>
+				<button class="g btn btn-success justify-content-center">Reset</button>
+              </div>
+
+            
+        </form>
+
+
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                
+                <th scope="col">name</th>
+				<th scope="col">Gender</th>
+                <th scope="col">planName</th>
+                <th scope="col">planStatus</th>
+                <th scope="col">planStartDate</th>
+                <th scope="col">planEndDate</th>
+                <th scope="col">benefitAmount</th>
+                <th scope="col">denialReason</th>
+				<th scope="col">terminationDate</th>
+                <th scope="col">terminationReason</th>
+              </tr>
+            </thead>
+            <tbody>
+				<tr th:each="row:${tbl}" id = "Id">
+				 <td class=" " th:text="${row.getName()}">Name</td>
+				 <td class=" " th:text="${row.getGender()}">Gender</td>
+				 <td class=" " th:text="${row.getPlanName()}">Plan Name</td>
+				 <td class=" " th:utext="${row.getPlanStatus()}">Plan Status</td>
+				 <td class=" " th:text="${row.getPlanStartDate()}">Plan Start Date</td>
+				 <td class=" " th:text="${row.getPlanEndDate()}">Plan End Date</td>
+				 <td class=" " th:text="${row.getBenefitAmount()}">Benefit Amount</td>
+				 <td class=" " th:text="${row.getDenialReason()}">Denial Reason</td>
+				 <td class=" " th:text="${row.getTerminationDate()}">Termination Date</td>
+				 <td class=" " th:text="${row.getTerminationReason()}">Termination Reason</td>
+				 </tr>
+            </tbody>
+          </table>
+     </div>
+</body>
+</html>
